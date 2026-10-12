@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <section>
+        <label for="filter">Lọc</label>
+        <select id="filter">
+            <option value="all">Tất cả</option>
+            <option value="false">Đang làm</option>
+            <option value="true">Xong</option>
+        </select>
+    </section>
+    <section>
+        <p>Số việc còn lại: <span id="remaining">0</span></p>
+    </section>
+    <section>
+        <form id="todo-form">
+            <input id="todo-input" placeholder="Việc cần làm..." required>
+            <button>Thêm</button>
+        </form>
+    </section>
+    <section>
+        <ul id="todo-list"></ul>
+    </section>
+</body>
+<script type="module" src="main.js" defer></script>
+</html>
