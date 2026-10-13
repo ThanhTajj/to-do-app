@@ -1,16 +1,22 @@
 import { getTodos, setTodos } from "./storage.js"
 import { render } from "./render.js"
+import debounce from 'lodash/debounce'
+import groupBy from 'lodash/groupBy'
+import { format } from 'date-fns'
+import { vi } from 'date-fns/locale'
 
 const form = document.querySelector('#todo-form')
 const input = document.querySelector('#todo-input')
 const list = document.querySelector('#todo-list')
 const filter = document.querySelector('#filter')
 const remaining = document.querySelector('#remaining')
+const search = document.querySelector("#search")
 
 let todos = getTodos()
 
 function updateUI() {
-    render(remaining, list, filter.value, todos)
+    const groupedTodos = groupBy(todos, 'done')
+    render(remaining, list, filter.value, todos, search.value, groupedTodos, format, vi)
 }
 
 form.addEventListener('submit', (e) => {
@@ -22,7 +28,8 @@ form.addEventListener('submit', (e) => {
         {
             id: Date.now(),
             text: text,
-            done:false
+            done:false,
+            createdAt: new Date().toISOString()
         }
     ]
     setTodos(todos)
@@ -61,5 +68,7 @@ list.addEventListener('change', (e) => {
 })
 
 filter.addEventListener('change', updateUI)
+
+search.addEventListener('input', debounce( updateUI, 300))
 
 updateUI()
